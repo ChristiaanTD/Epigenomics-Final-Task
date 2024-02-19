@@ -1,8 +1,7 @@
----
-title: "Practical Epigenomics"
-subtitle: "Exploring ATAC-seq data and distal regulatory regions"
-author: "Thijs Dormans"
-date: "10-02-2024"
+#Epigenomics Final Task 
+
+By: Thijs Dormans
+Date: 19-02-2024
 
 # Introduction
 
@@ -488,6 +487,7 @@ Mean Distance: 76026.47
 Median Distance: 36609
 ```
 Summary:
+
 **Stomach**
 
 * Mean Distance: 47878.12
