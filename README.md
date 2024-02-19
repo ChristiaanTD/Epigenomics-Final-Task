@@ -3,19 +3,7 @@ title: "Practical Epigenomics"
 subtitle: "Exploring ATAC-seq data and distal regulatory regions"
 author: "Thijs Dormans"
 date: "10-02-2024"
-output: 
-     template: rmdformats::downcute
-     use_bookdown : TRUE
----
-<style type="text/css">
-  h1 {
-        font-weight: bold;
-        font-size: 24px;
-      }
-      body {
-  text-align: justify;
-}
-</style>  
+
 # Introduction
 
 This practical is part of the course in epigenomics. This practical builds on the handout from the epigonimics_uvic github of Beatrice Borsari (https://github.com/bborsari/epigenomics_uvic/wiki). Several steps from this github (section 2 &3) have been followed whereby EN‐TEx ChIP‐seq data has been obtained and downstream analyses have been performed. For this practical we focus specifically on sections 4 & 5 which has the following  objectives:
