@@ -276,7 +276,6 @@ As distal regulatory regions are located outside of protein coding areas so we n
 * B:Find intersect between H3K27ac peaks and ATAC-peaks outside of genes and create bed file
 * C:Find intersect between two above generated bed files.
 
-
 A: Find intersect between H3K4me1 peaks and ATAC-peaks outside of genes and create .bed file.
 ```{bash}
 cut -f-2 analyses/H3K4me1.bigBed.peaks.ids.txt |
