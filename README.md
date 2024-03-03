@@ -2,7 +2,7 @@
 
 By: Thijs Dormans
 
-Date: 19-02-2024
+Date: 03-03-2024
 
 # Introduction
 
@@ -10,7 +10,7 @@ This practical is part of the course in epigenomics. This practical builds on th
 
 **Section 4: EN‐TEx ATAC‐seq data: downstream analyses:** 
 
-In this section we obtain  EN-TEx ATAC-seq data from donor ENCDO451RUA on the ENCODE portal (https://www.encodeproject.org). Next we run an intersection analysis using BEDTools to find the number of ATAC-seq peaks that intersect promotor regions and the number of ATAC-seq peaks that fall outside of gene coordinates.
+In this section we obtain  EN-TEx ATAC-seq data from donor ENCDO451RUA on the ENCODE portal (https://www.encodeproject.org). Next we run an intersection analysis using BEDTools to find the number of ATAC-seq peaks that intersect promoter regions and the number of ATAC-seq peaks that fall outside of gene coordinates.
 
 **Section 5: Distal regulatory activity:**
 
@@ -26,6 +26,7 @@ library(rmdformats)
 ```{bash}
 sudo docker run -v $PWD:$PWD -w $PWD --rm -it dgarrimar/epigenomics_course
 ```
+
 # Tasks of hands-on section 4
 
 ## 4.1 Set up folders
@@ -124,7 +125,7 @@ done
 
 We will now perform the intersection analyses for both the tissues. We extract the first two columns and set their values as filename and as tissue variable respectively in order to calculate the intersection. We store this in a txt file.
 
-#### Number of peaks that intersect promotor region
+#### Number of peaks that intersect promoter region
 ```{bash}
 cut -f-2 analyses/bigBed.peaks.ids.txt |\
 while read filename tissue; do 
@@ -298,19 +299,19 @@ done
 
 C:Find intersect between H3K27ac two above generated bed files and create final .bed file.
 ```{bash}
-for tissue stomach sigmoid_colon; do
+for tissue in stomach sigmoid_colon; do
   cut -f-2 analyses/H3K27ac.bigBed.peaks.ids.txt |
-  while read filename tissue; do 
+  while read filename; do
     bedtools intersect -a analyses/peaks.analysis/"$tissue".H3K27ac.outside.bed -b analyses/peaks.analysis/"$tissue".H3K4me1.outside.bed -u > analyses/peaks.analysis/overlap.outside.histone."$tissue".bed
+  done
 done
+
 ```
 
 Obtain the counts.
 
 ```{bash}
 wc -l analyses/peaks.analysis/*histone*.bed
-
-wc -l analyses/peaks.analysis/*hostone*.bed
 ```
 ```{latex}
   7367 analyses/peaks.analysis/overlap.outside.histone.sigmoid_colon.bed
@@ -323,7 +324,7 @@ wc -l analyses/peaks.analysis/*hostone*.bed
 
 Task description: Focus on regulatory elements that are located on chromosome 1, and generate a file *regulatory.elements.starts.tsv* that contains the name of the regulatory region (i.e. the name of the original ATAC-seq peak) and the start (5') coordinate of the region.
 
-Let's follow the reqiured steps for each tissue. But first we need to know which columns contain this info. Lets take a look at the stomach file to explore.
+Let's follow the required steps for each tissue. But first we need to know which columns contain this info. Lets take a look at the stomach file to explore.
 
 ```{bash}
 head -1 analyses/peaks.analysis/overlap.outside.histone.stomach.bed | awk 'BEGIN{FS=OFS="\t"}{for (i=1;i<=NF;i++){print $i, i}}'
@@ -344,7 +345,7 @@ Peak_8834       4
 
 
 The chromosome information is located in column 1, the start coordinate in column 2 and the name of the peak is in column 4.
-Let's go ahead and obtain the infomation we need fo rboth tissues.
+Let's go ahead and obtain the information we need for both tissues.
 
 ```{bash}
 for tissue in sigmoid_colon stomach; do
@@ -457,7 +458,7 @@ done
 
 ## Task 5.7
 
-Now using R we can caluclate the mean and median of the stored distances. Let's write a small function
+Now using R we can calculate the mean and median of the stored distances. Let's write a small function
 ```{bash}
 R
 compute_mean_median <- function(file) {
