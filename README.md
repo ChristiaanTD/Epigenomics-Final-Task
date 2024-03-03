@@ -272,22 +272,18 @@ done
 
 As distal regulatory regions are located outside of protein coding areas so we need to perform intersecting steps. We will perform the following procedures for both tissues:
 
-* A:Find intersect between H3K4me1 and ATAC-peaks outside of genes and create bed file
-* B:Find intersect between H3K4me1 and ATAC-peaks outside of genes and create bed file
-* C:Find intersect between H3K27ac two above generated bed files.
+* A:Find intersect between H3K4me1 peaks and ATAC-peaks outside of genes and create bed file
+* B:Find intersect between H3K27ac peaks and ATAC-peaks outside of genes and create bed file
+* C:Find intersect between two above generated bed files.
 
 
-H3K4me1
-A: Find intersect between H3K4me1 and ATAC-peaks outside of genes and create .bed file.
-
-
+A: Find intersect between H3K4me1 peaks and ATAC-peaks outside of genes and create .bed file.
 ```{bash}
 cut -f-2 analyses/H3K4me1.bigBed.peaks.ids.txt |
 while read filename tissue; do 
   bedtools intersect -a data/bed.files/"$filename".bed -b ../ATAC-seq/analyses/peaks.analysis/ATACpeaks.outside.gene."$tissue".bed -u > analyses/peaks.analysis/"$tissue".H3K4me1.outside.bed
 done
 ```
-
 
 B:Find intersect between H3K27ac and ATAC-peaks outside of genes and create .bed file.
 ```{bash}
@@ -297,7 +293,7 @@ while read filename tissue; do
 done
 ```
 
-C:Find intersect between H3K27ac two above generated bed files and create final .bed file.
+C:Find intersect between two above generated bed files and create final .bed file.
 ```{bash}
 for tissue in stomach sigmoid_colon; do
   cut -f-2 analyses/H3K27ac.bigBed.peaks.ids.txt |
@@ -305,10 +301,8 @@ for tissue in stomach sigmoid_colon; do
     bedtools intersect -a analyses/peaks.analysis/"$tissue".H3K27ac.outside.bed -b analyses/peaks.analysis/"$tissue".H3K4me1.outside.bed -u > analyses/peaks.analysis/overlap.outside.histone."$tissue".bed
   done
 done
-
 ```
-
-Obtain the counts.
+Now we obtain the counts.
 
 ```{bash}
 wc -l analyses/peaks.analysis/*histone*.bed
